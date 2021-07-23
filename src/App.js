@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import List from './components/List';
 
-function App() {
+const App = () => {
+  const [characters, setCharacters] = useState([])
+  const [index, setIndex] = useState(80);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/characters')
+      .then(resp => resp.json())
+      .then(data => setCharacters(data))
+    // let nextUrl = "https://swapi.dev/api/people";
+    // let charData = [];
+
+    // while (nextUrl) {
+    //   const response = await fetch(nextUrl);
+    //   const data = await response.json();
+    //   nextUrl = data.next;
+    //   charData = [...charData, ...data.results]
+    // }
+
+    // for (let i = 0; i < charData.length; i++) {
+    //   const character = charData[i];
+    //   const response = await fetch(character.homeworld);
+    //   const data = await response.json();
+    //   character.homeworld = data.name
+
+    //   await fetch('http://localhost:3001/characters', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(character)
+    //   })
+    // }
+
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Star Wars!</h1>
+      <List
+        characters={ characters }
+        index={ index }
+      />
     </div>
-  );
+  )
 }
 
 export default App;
